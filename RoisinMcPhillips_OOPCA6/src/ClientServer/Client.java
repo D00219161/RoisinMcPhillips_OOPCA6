@@ -30,7 +30,7 @@ public class Client
 
             System.out.println("Client: This Client is running and has connected to the server");
 
-            System.out.println("[Commands: \"HearBeat\" to get heartbeat, \"Time\" to get time, or \"Echo message\" to get echo)]");
+            System.out.println("[Commands: \"HeartBeat\" to get heartbeat, \"Time\" to get time, or \"Echo message\" to get echo)]");
             System.out.println("Please enter a command: ");
             
             String command = in.nextLine();  // read a command from the user
@@ -50,16 +50,20 @@ public class Client
 
                 //Wrap the JsonArray in a JsonObject & give the JsonArray a key name
                 JsonObject jsonRootObject = Json.createObjectBuilder()
-                        .add("PacketType", "HearBeat") //"PacketType" = Key, "HeartBeat" = Value
+                        .add("PacketType", "HeartBeat") //"PacketType" = Key, "HeartBeat" = Value
                         .build();
 
-                String message = jsonRootObject.toString();
+                String value = jsonRootObject.toString();
+                socketWriter.println(value); //Writes the command to a socket
                 
-                socketWriter.println(message); //Writes the command to a socket
+                System.out.println("Client Request: " + value);
+                
+                String response = socketReader.nextLine();
+                System.out.println("Response from Server: \"" + response + "\"");
             }
             ///End Of HeartBeat Message
             
-            if (command.startsWith("Time")) // we expect the server to return a time (in milliseconds)
+            else if (command.startsWith("Time")) // we expect the server to return a time (in milliseconds)
             {
                 long time = socketReader.nextLong();  // wait for, and read time (as we expect time reply)
                 Date date = new Date(time);

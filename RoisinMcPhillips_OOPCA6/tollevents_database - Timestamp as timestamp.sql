@@ -1,0 +1,166 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 25, 2020 at 07:09 PM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 5.6.38
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tollevents_database`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event`
+--
+
+CREATE TABLE `event` (
+  `ID` int(11) NOT NULL,
+  `REGISTRATION` varchar(50) NOT NULL,
+  `IMAGEID` varchar(50) NOT NULL,
+  `TIMESTAMP` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`ID`, `REGISTRATION`, `IMAGEID`, `TIMESTAMP`) VALUES
+(1, '191LH1111', '30402', '2020-02-14 10:15:30'),
+(2, '182D3456', '30403', '2020-02-14 10:15:31'),
+(3, '171MN3034', '30404', '2020-02-14 10:15:32'),
+(4, '201LH304', '30405', '2020-02-14 13:15:33'),
+(5, '192D3456', '30406', '2020-02-14 13:15:38'),
+(6, '161C3456', '30407', '2020-02-14 14:15:35'),
+(7, '201LH3025', '30408', '2020-02-14 15:15:36'),
+(8, '192D33457', '30409', '2020-02-14 16:15:37'),
+(9, '161C3457', '30410', '2020-02-14 22:15:38'),
+(10, '191LH1111', '30411', '2020-02-14 23:15:39'),
+(11, '191LH1112', '30412', '2020-02-15 12:15:40'),
+(12, '191LH1113', '30413', '2020-02-15 12:15:41'),
+(13, '191LH1114', '30414', '2020-02-15 12:15:42'),
+(14, '201LH304', '30415', '2020-02-15 12:15:43'),
+(15, '201LH305', '30416', '2020-02-15 12:15:44'),
+(16, '201LH306', '30417', '2020-02-15 12:15:45'),
+(17, '201LH307', '30418', '2020-02-15 12:15:46'),
+(18, '201LH308', '30419', '2020-02-15 21:15:47'),
+(19, '201XX309', '30420', '2020-02-15 22:15:48'),
+(20, '191LH1111', '30421', '2020-02-16 11:16:49'),
+(21, '152DL345', '30422', '2020-02-16 11:16:50'),
+(22, '201LH304', '30423', '2020-02-16 11:16:51'),
+(23, '201LH305', '30424', '2020-02-16 11:16:52'),
+(24, '201LH3064', '30425', '2020-02-16 11:16:53'),
+(25, '201LH3076', '30426', '2020-02-16 11:16:54'),
+(26, '201LH3083', '30427', '2020-02-16 11:16:55'),
+(27, '201LH309', '30428', '2020-02-16 11:16:56'),
+(28, '201LH310', '30429', '2020-02-16 11:16:57'),
+(29, '201LH311', '30430', '2020-02-16 11:16:58'),
+(30, '201LH312', '30431', '2020-02-16 11:16:59'),
+(31, '191LH1111', '30432', '2020-02-17 13:20:01'),
+(32, '201CN3456', '30433', '2020-02-17 14:25:02'),
+(33, '201CN3457', '30434', '2020-02-17 16:20:03'),
+(34, '201LH304', '30435', '2020-02-17 16:20:04'),
+(35, '181MH3456', '30436', '2020-02-17 17:33:05'),
+(36, '181MH3456', '30437', '2020-02-17 18:20:06'),
+(37, '181MH3458', '30438', '2020-02-17 18:20:07'),
+(38, '181MH3459', '30439', '2020-02-17 18:58:08'),
+(39, '181XX3460', '30440', '2020-02-17 23:20:09'),
+(40, '181MH3461', '30441', '2020-02-17 23:25:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicles`
+--
+
+CREATE TABLE `vehicles` (
+  `ID` int(11) NOT NULL,
+  `REGISTRATION` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `vehicles`
+--
+
+INSERT INTO `vehicles` (`ID`, `REGISTRATION`) VALUES
+(1, '151DL200'),
+(2, '152DL345'),
+(3, '161C3457'),
+(4, '181MH3456'),
+(5, '181MH3458'),
+(6, '181MH3459'),
+(7, '181MH3461'),
+(8, '191LH1111'),
+(9, '191LH1112'),
+(10, '191LH1113'),
+(11, '191LH1114'),
+(12, '192D33457'),
+(13, '201CN3456'),
+(14, '201CN3457'),
+(15, '201LH3025'),
+(16, '201LH304'),
+(17, '201LH305'),
+(18, '201LH306'),
+(19, '201LH3064'),
+(20, '201LH307'),
+(21, '201LH3076'),
+(22, '201LH308'),
+(23, '201LH3083'),
+(24, '201LH309'),
+(25, '201LH310'),
+(26, '201LH311'),
+(27, '201LH312'),
+(28, '201LH355'),
+(29, '201LH777'),
+(30, '151MN666');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `event`
+--
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `event`
+--
+ALTER TABLE `event`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT for table `vehicles`
+--
+ALTER TABLE `vehicles`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

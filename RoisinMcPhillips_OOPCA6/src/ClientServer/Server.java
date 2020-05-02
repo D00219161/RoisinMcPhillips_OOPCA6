@@ -3,15 +3,11 @@ package ClientServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
-import java.util.Scanner;
-import javax.json.JsonBuilderFactory;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -96,31 +92,27 @@ public class Server
                 {
                     System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
 
-                    //HeartBeat Message - Message is in Json formate - need to parse the JSON
-                    JsonBuilderFactory factory = Json.createBuilderFactory(null);
-
-                    JsonObject jsonRootObject = Json.createObjectBuilder()
-                            .add("PacketType", "HearBeat Response") //Message may be {"PacketType":"HearBeat Response"}
-                            .build();
-
                     //Parse JSON - Convert message into input stream
-                    InputStream in = in();
+                    JsonReader reader = Json.createReader(socketReader);
+                    JsonObject object = reader.readObject();
+                    String value = object.getString("PacketType"); // print the JSON string
                     
-                    System.out.println(in);  // print the JSON string
-
-                    JsonReader reader = Json.createReader(in);
-
-                    JsonObject object = reader.readObject();  
-
-                    String value = object.getString("PacketType"); 
-
+                    //HeartBeat Message - Message is in Json formate - need to parse the JSON
                     if (value.equalsIgnoreCase("HeartBeat"))
                     {
                         //reply - send over socket to client
-                        socketWriter.println(value);
+                        System.out.println("Starting Request ...");
+                        
+                        //Message may be {"PacketType":"HearBeat Response"} - Response Back to client
+                        JsonObject jsonRootObject = Json.createObjectBuilder()
+                                .add("PacketType", "HeartBeat Response")
+                                .build();
+                        
+                        String response = jsonRootObject.toString();
+                        socketWriter.println(response);
+                        System.out.println("Server Response: " + response);
                     }
                     //End Of HeartBeat Message
-
                     else if (message.startsWith("Time"))
                     {
                         socketWriter.println(System.currentTimeMillis());  // sends current time to client as long int
