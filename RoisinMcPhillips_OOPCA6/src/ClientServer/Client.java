@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Date;
 import java.util.Scanner;
 import javax.json.Json;
 import javax.json.JsonBuilderFactory;
@@ -30,6 +29,7 @@ public class Client
 
             System.out.println("Client: This Client is running and has connected to the server");
 
+            //Commands used for requesting data from server and for sending data over
             System.out.println("[Commands: \"GetRegisteredVehicles\" to get registered vehicles, "
                     + "\"HeartBeat\" to get heartbeat, "
                     + "\"RegisterValidTollEvent\" to register a valid toll event "

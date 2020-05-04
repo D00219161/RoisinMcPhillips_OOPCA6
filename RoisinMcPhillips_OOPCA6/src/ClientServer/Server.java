@@ -57,117 +57,117 @@ public class Server
         System.out.println("Server: Server exiting, Goodbye!");
     }
 
-    //Constructor
-    public class ClientHandler implements Runnable   // each ClientHandler communicates with one Client
+//Constructor
+public class ClientHandler implements Runnable   // each ClientHandler communicates with one Client
     {
-        BufferedReader socketReader;
-        PrintWriter socketWriter;
-        Socket socket;
-        int clientNumber;
+     BufferedReader socketReader;
+     PrintWriter socketWriter;
+     Socket socket;
+     int clientNumber;
 
-        public ClientHandler(Socket clientSocket, int clientNumber)
-        {
-            try
-            {
-                InputStreamReader isReader = new InputStreamReader(clientSocket.getInputStream()); //Gets input stream from client socket
-                this.socketReader = new BufferedReader(isReader);
+public ClientHandler(Socket clientSocket, int clientNumber)
+    {
+        try
+           {
+            InputStreamReader isReader = new InputStreamReader(clientSocket.getInputStream()); //Gets input stream from client socket
+            this.socketReader = new BufferedReader(isReader);
 
-                OutputStream os = clientSocket.getOutputStream();
-                this.socketWriter = new PrintWriter(os, true); // true => auto flush socket buffer
+            OutputStream os = clientSocket.getOutputStream();
+            this.socketWriter = new PrintWriter(os, true); // true => auto flush socket buffer
 
-                this.clientNumber = clientNumber;  // ID number that we are assigning to this client
+            this.clientNumber = clientNumber;  // ID number that we are assigning to this client
 
-                this.socket = clientSocket;  // store socket ref for closing 
+            this.socket = clientSocket;  // store socket ref for closing 
 
-            } catch (IOException ex)
+           } catch (IOException ex)
             {
                 ex.printStackTrace();
             }
         }
 
 @Override
-        public void run() //Run Method - go round in a loop
+public void run() //Run Method - go round in a loop
         {
-            String message;
-            try
-            {
-                while ((message = socketReader.readLine()) != null)
-                {
-                    System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
+        String message;
+          try
+           {
+             while ((message = socketReader.readLine()) != null)
+               {
+                System.out.println("Server: (ClientHandler): Read command from client " + clientNumber + ": " + message);
 
-                    //Parse JSON - Convert message into input stream - for all parts
-                    JsonReader reader = Json.createReader(socketReader);
-                    JsonObject object = reader.readObject();
-                    String value = object.getString("PacketType"); // print the JSON string
+                //Parse JSON - Convert message into input stream - for all parts
+                JsonReader reader = Json.createReader(socketReader);
+                JsonObject object = reader.readObject();
+                String value = object.getString("PacketType"); // print the JSON string
 
-                    //HeartBeat Message - Message is in Json formate - need to parse the JSON
-                    if (value.equalsIgnoreCase("HeartBeat"))
+                //HeartBeat Message - Message is in Json formate - need to parse the JSON
+                if (value.equalsIgnoreCase("HeartBeat"))
                     {
-                        //reply - send over socket to client
-                        System.out.println("Starting Request ...");
+                    //reply - send over socket to client
+                    System.out.println("Starting Request ...");
 
-                        //Message may be {"PacketType":"HearBeat Response"} - Response Back to client
-                        JsonObject jsonRootObject = Json.createObjectBuilder()
-                                .add("PacketType", "HeartBeat Response")
-                                .build();
+                    //Message may be {"PacketType":"HearBeat Response"} - Response Back to client
+                    JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "HeartBeat Response")
+                        .build();
 
-                        String response = jsonRootObject.toString();
-                        socketWriter.println(response);
-                        System.out.println("Server Response: " + response);
+                    String response = jsonRootObject.toString();
+                    socketWriter.println(response);
+                    System.out.println("Server Response: " + response);
                     }
                     //End Of HeartBeat Message
 
                     //GetRegisteredVehicles Message
                     else if (value.startsWith("GetRegisteredVehicles"))
                     {
-                        //reply - send over socket to client
-                        System.out.println("Starting Request ...");
+                    //reply - send over socket to client
+                    System.out.println("Starting Request ...");
 
-                        //Message may be {"PacketType":"ReturnRegisteredVehicles"} - Response Back to client
-                        //Message may be {"Vehicles":"[ArrayList of Registered Vehicles]"} - Response Back to client
-                        JsonObject jsonRootObject = Json.createObjectBuilder()
-                                .add("PacketType", "ReturnRegisteredVehicles")
-                                .build();
+                    //Message may be {"PacketType":"ReturnRegisteredVehicles"} - Response Back to client
+                    //Message may be {"Vehicles":"[ArrayList of Registered Vehicles]"} - Response Back to client
+                    JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "ReturnRegisteredVehicles")
+                        .build();
 
-                        //Reading in from vehicles.cvs and adding to set
+                    //Reading in from vehicles.cvs and adding to set
                         
-                        String response = jsonRootObject.toString();
-                        socketWriter.println(response);
-                        System.out.println("Server Response: " + response);
+                    String response = jsonRootObject.toString();
+                    socketWriter.println(response);
+                    System.out.println("Server Response: " + response);
                     }
                     //End Of GetRegisteredVehicles Message
                     
                     //RegisterVaildTollEvent Message
                      else if (value.startsWith("RegisterVaildTollEvent"))
                     {
-                        //reply - send over socket to client
-                        System.out.println("Starting Request ...");
+                    //reply - send over socket to client
+                    System.out.println("Starting Request ...");
 
-                        //Message may be {"PacketType":"RegisteredVaildTollEvent"} - Response Back to client
-                        JsonObject jsonRootObject = Json.createObjectBuilder()
-                                .add("PacketType", "RegisteredVaildTollEvent")
-                                .build();
+                    //Message may be {"PacketType":"RegisteredVaildTollEvent"} - Response Back to client
+                    JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "RegisteredVaildTollEvent")
+                        .build();
 
-                        String response = jsonRootObject.toString();
-                        socketWriter.println(response);
-                        System.out.println("Server Response: " + response);
+                    String response = jsonRootObject.toString();
+                    socketWriter.println(response);
+                    System.out.println("Server Response: " + response);
                     }
                     //End Of RegisterVaildTollEvent Message
                     
                     //RegisterInvaildTollEvent Message
                      else if (value.startsWith("RegisterInvaildTollEvent"))
                     {
-                        //reply - send over socket to client
-                        System.out.println("Starting Request ...");
+                    //reply - send over socket to client
+                    System.out.println("Starting Request ...");
 
-                        //Message may be {"PacketType":"RegisteredInvaildTollEvent"} - Response Back to client
-                        JsonObject jsonRootObject = Json.createObjectBuilder()
-                                .add("PacketType", "RegisteredInvaildTollEvent")
-                                .build();
+                    //Message may be {"PacketType":"RegisteredInvaildTollEvent"} - Response Back to client
+                    JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "RegisteredInvaildTollEvent")
+                        .build();
 
-                        String response = jsonRootObject.toString();
-                        socketWriter.println(response);
-                        System.out.println("Server Response: " + response);
+                    String response = jsonRootObject.toString();
+                    socketWriter.println(response);
+                    System.out.println("Server Response: " + response);
                     }
                     //End Of RegisterInvaildTollEvent Message
                     
