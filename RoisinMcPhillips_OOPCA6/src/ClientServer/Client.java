@@ -30,7 +30,12 @@ public class Client
 
             System.out.println("Client: This Client is running and has connected to the server");
 
-            System.out.println("[Commands: \"HeartBeat\" to get heartbeat, \"Time\" to get time, or \"Echo message\" to get echo)]");
+            System.out.println("[Commands: \"GetRegisteredVehicles\" to get registered vehicles, "
+                    + "\"HeartBeat\" to get heartbeat, "
+                    + "\"RegisterValidTollEvent\" to register a valid toll event "
+                    + "\"RegisterInvaildTollEvent\" to register an invalid toll event, "
+                    + "\"Close\" to close the connection]");
+            
             System.out.println("Please enter a command: ");
             
             String command = in.nextLine();  // read a command from the user
@@ -40,9 +45,9 @@ public class Client
             PrintWriter socketWriter = new PrintWriter(os, true);// true=> auto flush buffers
             socketWriter.println(command);  // write command to socket
           
-            Scanner socketReader = new Scanner(socket.getInputStream()); //Read Messages 
+            Scanner socketReader = new Scanner(socket.getInputStream()); //Read Messages over the server
 
-            ///HeartBeat Message
+            //Start of HeartBeat Message
             if (command.startsWith("HeartBeat")) //expect server to return a time (in milliseconds)
             {
                 //We prepare the heartbeat message
@@ -61,17 +66,82 @@ public class Client
                 String response = socketReader.nextLine();
                 System.out.println("Response from Server: \"" + response + "\"");
             }
-            ///End Of HeartBeat Message
+            //End Of HeartBeat Message
             
-            else if (command.startsWith("Time")) // we expect the server to return a time (in milliseconds)
+            //Start of GetRegisteredVehicles Message
+            else if (command.startsWith("GetRegisteredVehicles")) //expect server to return a time (in milliseconds)
             {
-                long time = socketReader.nextLong();  // wait for, and read time (as we expect time reply)
-                Date date = new Date(time);
-                System.out.println("Client: Response from server: Time: " + date.toString());
-            } 
-            else // the user has entered the Echo command or an invalid command
+                //We prepare the heartbeat message
+                 JsonBuilderFactory factory = Json.createBuilderFactory(null);
+
+                //Wrap the JsonArray in a JsonObject & give the JsonArray a key name
+                JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "GetRegisteredVehicles") //"PacketType" = Key, "GetRegisteredVehicles" = Value
+                        .build();
+
+                String value = jsonRootObject.toString();
+                socketWriter.println(value); //Writes the command to a socket
+                
+                System.out.println("Client Request: " + value);
+                
+                String response = socketReader.nextLine();
+                System.out.println("Response from Server: \"" + response + "\"");
+            }
+            //End Of GetRegisteredVehicles Message
+            
+            //Start of RegisterVaildTollEvent Message
+            if (command.startsWith("RegisterVaildTollEvent"))
             {
-                String input = socketReader.nextLine();// wait for, and retrieve the echo ( or other message)
+                //We prepare the heartbeat message
+                 JsonBuilderFactory factory = Json.createBuilderFactory(null);
+
+                //Wrap the JsonArray in a JsonObject & give the JsonArray a key name
+                JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "RegisterVaildTollEvent") //"PacketType" = Key, "RegisterVaildTollEvent" = Value
+                        .build();
+
+                String value = jsonRootObject.toString();
+                socketWriter.println(value); //Writes the command to a socket
+                
+                System.out.println("Client Request: " + value);
+                
+                String response = socketReader.nextLine();
+                System.out.println("Response from Server: \"" + response + "\"");
+            }
+            //End Of RegisterVaildTollEvent Message
+                    
+            //Start of RegisterInvaildTollEvent Message
+             if (command.startsWith("RegisterInvaildTollEvent"))
+            {
+                //We prepare the heartbeat message
+                 JsonBuilderFactory factory = Json.createBuilderFactory(null);
+
+                //Wrap the JsonArray in a JsonObject & give the JsonArray a key name
+                JsonObject jsonRootObject = Json.createObjectBuilder()
+                        .add("PacketType", "RegisterInvaildTollEvent") //"PacketType" = Key, "RegisterInvaildTollEvent" = Value
+                        .build();
+
+                String value = jsonRootObject.toString();
+                socketWriter.println(value); //Writes the command to a socket
+                
+                System.out.println("Client Request: " + value);
+                
+                String response = socketReader.nextLine();
+                System.out.println("Response from Server: \"" + response + "\"");
+            }
+            //End Of RegisterInvaildTollEvent Message
+                    
+                    
+            //Start of Close connection with client
+            else if (command.startsWith("Close"))
+            {
+                System.out.println("GoodBye!"); //Closing connection with the server
+            }
+            //End Of Close Message
+            
+            else  // the user has entered close or an invalid command
+            {
+                String input = socketReader.nextLine();
                 System.out.println("Client: Response from server: \"" + input + "\"");
             }
             socketWriter.close();

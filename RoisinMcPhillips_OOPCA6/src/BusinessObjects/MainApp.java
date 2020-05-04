@@ -15,7 +15,6 @@ import java.util.Set;
 
 public class MainApp
 {
-
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args)
