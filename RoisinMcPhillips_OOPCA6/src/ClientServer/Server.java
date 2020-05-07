@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import javax.json.Json;
@@ -63,7 +62,6 @@ public class Server
 //Constructor
     public class ClientHandler implements Runnable   // each ClientHandler communicates with one Client
     {
-
         BufferedReader socketReader;
         PrintWriter socketWriter;
         Socket socket;
@@ -198,7 +196,13 @@ public class Server
                     //Close connection with client
                     else if (value.equalsIgnoreCase("Close"))
                     {
-                        socket.close(); //Closing connection with the client
+                        System.out.println("Starting Request ...");
+                        //Closing connection with the client
+                        //Need to close the writer, reader and socket to edn session fully
+                        //No response needed to be sent back over
+                        socketWriter.close(); 
+                        socketReader.close();
+                        socket.close();
                     }
                     //End Of Close Message
 
@@ -211,7 +215,8 @@ public class Server
 
             } catch (IOException ex)
             {
-                ex.printStackTrace();
+                //ex.printStackTrace();
+                System.out.println("Client message: IOException: " + ex);
             }
             System.out.println("Server: (ClientHandler): Handler for Client " + clientNumber + " is terminating .....");
         }
