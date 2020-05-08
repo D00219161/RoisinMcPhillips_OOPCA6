@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import javax.json.Json;
-import javax.json.JsonObject;
 
 public class Client
 {
