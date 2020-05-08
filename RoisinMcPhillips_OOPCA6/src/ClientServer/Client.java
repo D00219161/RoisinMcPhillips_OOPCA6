@@ -111,41 +111,26 @@ public class Client
                 //We prepare the RegisterVaildTollEvent message
                 Set<String> Hashset;
                 Hashset = loadVailadation("Toll-Events.csv");
-                ArrayList<String> invalidRegistrationsList = new ArrayList<>();
                 HashMap<String, ArrayList<TollEvent>> map = new HashMap<>();
                 TollEvent event = new TollEvent(41, "162CN3457", 30446, 2020);
 
                 if (Hashset.contains(event.getRegistration()))
                 {
                     System.out.println("Is valid " + event);
-                    // then process the TollEvent object
-                    // i.e. write TollEvent object to a 
-                    // map<String(registration) ,List of TollEvents (ArrayList)>
-                    //HashMap<String, ArrayList<TollEvent>> mapList = new HashMap<>();
 
-                    // map( KEY , VALUE );
-//                    if (map.get(event.getRegistration()) == null) // it's not there
-//                    {
-//                        ArrayList<TollEvent> list = new ArrayList<>();
-//                        list.add(event);
-//                        map.put(event.getRegistration(), list);
-//                    }
-//                    else // reg is already there
-//                    {
-//                        ArrayList<TollEvent> list = map.get(event.getRegistration());
-//                        list.add(event);  // adds to ArrayList in the map             
-//                    }
+                    if (map.get(event.getRegistration()) == null) // it's not there
+                    {
+                        ArrayList<TollEvent> list = new ArrayList<>();
+                        list.add(event);
+                        map.put(event.getRegistration(), list);
+                    }
+                    else // reg is already there
+                    {
+                        ArrayList<TollEvent> list = map.get(event.getRegistration());
+                        list.add(event);  // adds to ArrayList in the map             
+                    }
                     System.out.println("From Map: " + map.get("162CN3457"));
                 }
-                else
-                {
-                    System.out.println("Is NOT a valid Registration");
-                    // add to a list of Invalid registrations
-                    invalidRegistrationsList.add(event.getRegistration());
-                }
-
-                System.out.println("List of invalid registrations:"
-                        + invalidRegistrationsList);
 
                 // root object for json string
                 String jsonString = "{["
