@@ -34,8 +34,10 @@ public class TollEvent
      * 
      * @return JSON String representation of the objects data
      */
+    //Updated for OOPCA6
     public String toJson() {
         return "{"
+                + "\"ID\":" + this.id +","
                 + "\"Registration\":" + this.registration +","
                 + "\"ImageId\":" + "\"" + this.imageId + "\","
                 + "\"Timestamp\":" + "\"" + this.timestamp + "\","              

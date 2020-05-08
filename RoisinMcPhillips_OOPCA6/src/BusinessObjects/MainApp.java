@@ -96,7 +96,7 @@ public class MainApp
             }
 
             System.out.println("from map:" + map.get("201LH309"));
-            System.out.println("From Map: " + map.get("192CN7865"));
+            //System.out.println("From Map: " + map.get("192CN7865"));
         }
         else
         {
@@ -143,7 +143,7 @@ public class MainApp
 
         HashMap<String, ArrayList<TollEvent>> map = new HashMap<>();
 
-        TollEvent event = new TollEvent("192CN0900", 30402, 2020);
+        TollEvent event = new TollEvent("191LH1111", 30402, 2020);
 
         if (set.contains(event.getRegistration()))
         {

@@ -274,4 +274,124 @@ public class MySqlTollEventDao extends MySqlDao implements TollEventDaoInterface
             }
         } 
     }
+/*Roisin McPhillips OOP CA6 - New DAOs for new Tables for ca6*/
+   //Find total bill cost
+    @Override
+    public List<TollEvent> findBill() throws DaoException 
+    {
+    	Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<TollEvent> events = new ArrayList<>();
+        
+        try 
+        {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            con = this.getConnection();
+            
+            String query = "SELECT vehicle_type, vehicle_registration, timestamp, cost FROM toll_event natural"
+                    +"join customer_vehicles natural join customer natural join vehicle natural join vehicle_type_cost"
+                    + "where customer_name = John Smith ";
+            ps = con.prepareStatement(query);
+            
+            //Using a PreparedStatement to execute SQL...
+            rs = ps.executeQuery();
+            while (rs.next()) 
+            {
+                int Id = rs.getInt("ID");
+                String registration = rs.getString("REGISTRATION");
+                long imageId = rs.getLong("IMAGEID");
+                long timestamp = rs.getLong("TIMESTAMP");
+                TollEvent event = new TollEvent(Id, registration, imageId, timestamp);
+                events.add(event);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            throw new DaoException("findBill() " + e.getMessage());
+        } 
+        finally 
+        {
+            try 
+            {
+                if (rs != null) 
+                {
+                    rs.close();
+                }
+                if (ps != null) 
+                {
+                    ps.close();
+                }
+                if (con != null) 
+                {
+                    freeConnection(con);
+                }
+            } 
+            catch (SQLException e) 
+            {
+                throw new DaoException("findBill() " + e.getMessage());
+            }
+        }
+        return events;
+    }
+    
+     //Find total bill cost
+    @Override
+    public List<TollEvent> findBillTotal() throws DaoException 
+    {
+    	Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<TollEvent> events = new ArrayList<>();
+        
+        try 
+        {
+            //Get connection object using the methods in the super class (MySqlDao.java)...
+            con = this.getConnection();
+           
+            String query = "SELECT sum(cost)FROM toll_event natural join customer_vehicles natural join customer natural "
+                    + "join vehicle natural join vehicle_type_cost"
+                    + "where customer_name = John Smith ";
+            ps = con.prepareStatement(query);
+            
+            //Using a PreparedStatement to execute SQL...
+            rs = ps.executeQuery();
+            while (rs.next()) 
+            {
+                int Id = rs.getInt("ID");
+                String registration = rs.getString("REGISTRATION");
+                long imageId = rs.getLong("IMAGEID");
+                long timestamp = rs.getLong("TIMESTAMP");
+                TollEvent event = new TollEvent(Id, registration, imageId, timestamp);
+                events.add(event);
+            }
+        } 
+        catch (SQLException e) 
+        {
+            throw new DaoException("findBillTotal() " + e.getMessage());
+        } 
+        finally 
+        {
+            try 
+            {
+                if (rs != null) 
+                {
+                    rs.close();
+                }
+                if (ps != null) 
+                {
+                    ps.close();
+                }
+                if (con != null) 
+                {
+                    freeConnection(con);
+                }
+            } 
+            catch (SQLException e) 
+            {
+                throw new DaoException("findBillTotal() " + e.getMessage());
+            }
+        }
+        return events;
+    }
 }

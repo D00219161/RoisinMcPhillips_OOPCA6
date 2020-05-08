@@ -56,6 +56,23 @@ public class Main
             System.out.println("\nUpdating Data into Event Table");
             //IEventDao.updateTollEvent("181MH3461", 30450);
 
+            //OOP CA6
+           
+            events = IEventDao.findBill();
+
+            if (events.isEmpty())
+            {
+                System.out.println("There is no Bill");
+            }
+            
+            
+            events = IEventDao.findBillTotal();
+
+            if (events.isEmpty())
+            {
+                System.out.println("There is no Bill Total");
+            }
+            
         } catch (DaoException e)
         {
             e.printStackTrace();

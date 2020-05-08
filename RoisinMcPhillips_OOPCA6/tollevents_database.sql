@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2020 at 09:28 PM
+-- Generation Time: May 08, 2020 at 10:25 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 5.6.38
 
@@ -21,6 +21,50 @@ SET time_zone = "+00:00";
 --
 -- Database: `tollevents_database`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `customer_id` int(11) NOT NULL,
+  `customer_name` varchar(255) NOT NULL,
+  `customer_address` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`customer_id`, `customer_name`, `customer_address`) VALUES
+(1, 'John Smith', 'Cavan'),
+(2, 'Maria Walsh', 'Dublin'),
+(3, 'Tom Jones', 'Cork');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_vehicles`
+--
+
+CREATE TABLE `customer_vehicles` (
+  `customer_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_vehicles`
+--
+
+INSERT INTO `customer_vehicles` (`customer_id`, `vehicle_id`) VALUES
+(1, 1),
+(2, 3),
+(3, 6),
+(3, 4),
+(2, 2),
+(1, 5);
 
 -- --------------------------------------------------------
 
@@ -87,6 +131,55 @@ INSERT INTO `event` (`ID`, `REGISTRATION`, `IMAGEID`, `TIMESTAMP`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `toll_event`
+--
+
+CREATE TABLE `toll_event` (
+  `event_id` int(11) NOT NULL,
+  `vehicle_id` int(11) NOT NULL,
+  `image_id` varchar(255) NOT NULL,
+  `timestamp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `toll_event`
+--
+
+INSERT INTO `toll_event` (`event_id`, `vehicle_id`, `image_id`, `timestamp`) VALUES
+(1, 1, '2345', '2020'),
+(2, 2, '2342', '2020'),
+(3, 3, '2223', '2020'),
+(4, 4, '6353', '2020'),
+(5, 5, '5433', '2020'),
+(6, 6, '2455', '2020');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle`
+--
+
+CREATE TABLE `vehicle` (
+  `vehicle_id` int(11) NOT NULL,
+  `vehicle_registration` varchar(255) NOT NULL,
+  `vehicle_type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `vehicle`
+--
+
+INSERT INTO `vehicle` (`vehicle_id`, `vehicle_registration`, `vehicle_type`) VALUES
+(1, '191LH232', 'Car'),
+(2, '172CN989', 'Van'),
+(3, '192LH232', 'Truck'),
+(4, '161LH562', 'Car'),
+(5, '191D4534', 'Truck'),
+(6, '132CN786', 'Van');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `vehicles`
 --
 
@@ -131,15 +224,61 @@ INSERT INTO `vehicles` (`ID`, `REGISTRATION`) VALUES
 (29, '201LH777'),
 (30, '151MN666');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle_type_cost`
+--
+
+CREATE TABLE `vehicle_type_cost` (
+  `vehicleType` varchar(255) NOT NULL,
+  `cost` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `vehicle_type_cost`
+--
+
+INSERT INTO `vehicle_type_cost` (`vehicleType`, `cost`) VALUES
+('Car', '3.00'),
+('Van', '6.00'),
+('Truck', '9.00');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `customer_vehicles`
+--
+ALTER TABLE `customer_vehicles`
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `vehicle_id` (`vehicle_id`);
 
 --
 -- Indexes for table `event`
 --
 ALTER TABLE `event`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `toll_event`
+--
+ALTER TABLE `toll_event`
+  ADD PRIMARY KEY (`event_id`),
+  ADD KEY `vehicle_id` (`vehicle_id`);
+
+--
+-- Indexes for table `vehicle`
+--
+ALTER TABLE `vehicle`
+  ADD PRIMARY KEY (`vehicle_id`,`vehicle_type`);
 
 --
 -- Indexes for table `vehicles`
@@ -156,6 +295,12 @@ ALTER TABLE `vehicles`
 --
 ALTER TABLE `event`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT for table `toll_event`
+--
+ALTER TABLE `toll_event`
+  MODIFY `event_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `vehicles`

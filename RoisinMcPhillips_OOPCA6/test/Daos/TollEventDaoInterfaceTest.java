@@ -139,6 +139,49 @@ public class TollEventDaoInterfaceTest
         public void updateTollEvent(String registration, long timestamp) throws DaoException
         {
         }
+
+        @Override
+        public List<TollEvent> findBill() throws DaoException
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public List<TollEvent> findBillTotal() throws DaoException
+        {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
+
+    /**
+     * Test of findBill method, of class TollEventDaoInterface.
+     */
+    @Test
+    public void testFindBill() throws Exception
+    {
+        System.out.println("findBill");
+        TollEventDaoInterface instance = new TollEventDaoInterfaceImpl();
+        List<TollEvent> expResult = null;
+        List<TollEvent> result = instance.findBill();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of findBillTotal method, of class TollEventDaoInterface.
+     */
+    @Test
+    public void testFindBillTotal() throws Exception
+    {
+        System.out.println("findBillTotal");
+        TollEventDaoInterface instance = new TollEventDaoInterfaceImpl();
+        List<TollEvent> expResult = null;
+        List<TollEvent> result = instance.findBillTotal();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
     
 }
